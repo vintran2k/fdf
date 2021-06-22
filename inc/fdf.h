@@ -2,8 +2,8 @@
 # define FDF_H
 # define ESC_MAC 53
 # define ESC_LNX 65307
-# define WIDTH 1900
-# define HEIGHT 1080
+# define WIDTH 1200
+# define HEIGHT 670
 # define BUFFER_SIZE 4096
 
 # include <unistd.h>

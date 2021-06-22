@@ -92,8 +92,8 @@ t_pos	get_iso(t_var var, t_pos pos)
 {
 	t_pos iso;
 
-	iso.x = (pos.x - pos.y) * cos(var.angle); //* cos(var.angle);
-	iso.y = (pos.x + pos.y) / 2 * sin(var.angle);// - (var.map[var.y][var.x]);//* sin(var.angle) - (var.map[var.y][var.x + 1]);
+	iso.x = (pos.x - pos.y) / 1.46 * cos(var.angle); //* cos(var.angle);
+	iso.y = (pos.x + pos.y) / 1.46 * sin(var.angle);// - (var.map[var.y][var.x]);//* sin(var.angle) - (var.map[var.y][var.x + 1]);
 	return (iso);
 }
 
@@ -104,12 +104,6 @@ void	draw_r(t_var *var, t_data *mlx)
 	t_pos iso1;
 	t_pos iso2;
 
-	//init display
-	var->startx = HEIGHT / 2;
-	var->starty = -150;
-	var->size = 40;
-	var->angle = 0.67;
-
 	//init normal pos
 	pos1.x = var->startx + var->x * var->size;
 	pos1.y = var->starty + var->y * var->size;
@@ -119,8 +113,8 @@ void	draw_r(t_var *var, t_data *mlx)
 	//init iso pos
 	iso1 = get_iso(*var, pos1);
 	iso2 = get_iso(*var, pos2);
-	iso1.y -= var->map[var->y][var->x] * var->angle;
-	iso2.y -= var->map[var->y][var->x + 1] * var->angle;
+	iso1.y -= var->map[var->y][var->x] * 1.5;// * var->angle;
+	iso2.y -= var->map[var->y][var->x + 1] * 1.5;// * var->angle;
 	//iso1.x -= var->map[var->y][var->x] * var->angle;
 	//iso2.x -= var->map[var->y][var->x + 1] * var->angle;
 
@@ -138,12 +132,6 @@ void	draw_d(t_var *var, t_data *mlx)
 	t_pos iso1;
 	t_pos iso2;
 
-	//init display
-	var->startx = HEIGHT / 2;
-	var->starty = -150;
-	var->size = 40;
-	var->angle = 0.67;
-
 	//init normal pos
 	pos1.x = var->startx + var->x * var->size;
 	pos1.y = var->starty + var->y * var->size;
@@ -153,8 +141,8 @@ void	draw_d(t_var *var, t_data *mlx)
 	//init iso pos
 	iso1 = get_iso(*var, pos1);
 	iso2 = get_iso(*var, pos2);
-	iso1.y -= var->map[var->y][var->x] * var->angle;
-	iso2.y -= var->map[var->y + 1][var->x] * var->angle;
+	iso1.y -= var->map[var->y][var->x] * 1.5;// * var->angle;
+	iso2.y -= var->map[var->y + 1][var->x] * 1.5;// * var->angle;
 	//iso1.x -= var->map[var->y][var->x] * var->angle;
 	//iso2.x -= var->map[var->y + 1][var->x] * var->angle;
 
@@ -167,6 +155,12 @@ void	draw_d(t_var *var, t_data *mlx)
 
 void	ft_fdf(t_var *var, t_data *mlx)
 {
+	//init display
+	var->startx = WIDTH / 3 * 1.7;
+	var->starty = -250;
+	var->size = 50;
+	var->angle = 0.435;
+
 	var->y = 0;
 	while (var->y < var->nb_l)
 	{
