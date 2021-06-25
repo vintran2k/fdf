@@ -16,47 +16,9 @@ int	deal_mouse(void)
 
 void	put_pixel(t_data *mlx, int x, int y, int color)
 {
-	mlx->addr[y * mlx->line_length / 4 + x] = color;
+	if ((x >= 0 && x <= mlx->width) || (y >= 0 && y <= mlx->height))
+		mlx->addr[y * mlx->line_length / 4 + x] = color;
 }
-
-/*
-void	draw_line_s(t_data *mlx, int x1, int y1, int x2, int y2, int color)
-{
-	int dx;
-	int dy;
-	int s;
-	int i;
-	int j;
-
-	dx = x1 - x2;
-	dy = y2 - y1;
-	if (dx >= dy)
-		s = 2 * dy - dx;
-	else
-		s = 2 * dx - dy;
-	i = x1;
-	j = y1;
-	while (i > x2)
-	{
-		if (s < 0)
-		{
-			if (dx >= dy)
-				s = s + 2 * dy;
-			else
-				s = s + 2 * dx;
-		}
-		else
-		{
-			j++;
-			if (dx >= dy)
-				s = s + 2 * (dy - dx);
-			else
-				s = s + 2 * (dx - dy);
-		}
-		put_pixel(mlx, i, j, color);
-		i--;
-	}
-}*/
 
 void	draw_line(t_data *mlx, int x1, int y1, int x2, int y2, int color)
 {
@@ -92,8 +54,8 @@ t_pos	get_iso(t_var var, t_pos pos)
 {
 	t_pos iso;
 
-	iso.x = (pos.x - pos.y) / 1.46 * cos(var.angle); //* cos(var.angle);
-	iso.y = (pos.x + pos.y) / 1.46 * sin(var.angle);// - (var.map[var.y][var.x]);//* sin(var.angle) - (var.map[var.y][var.x + 1]);
+	iso.x = (pos.x - pos.y) * cos(var.angle);
+	iso.y = (pos.x + pos.y) * sin(var.angle);
 	return (iso);
 }
 
@@ -113,13 +75,8 @@ void	draw_r(t_var *var, t_data *mlx)
 	//init iso pos
 	iso1 = get_iso(*var, pos1);
 	iso2 = get_iso(*var, pos2);
-	iso1.y -= var->map[var->y][var->x] * 1.5;// * var->angle;
-	iso2.y -= var->map[var->y][var->x + 1] * 1.5;// * var->angle;
-	//iso1.x -= var->map[var->y][var->x] * var->angle;
-	//iso2.x -= var->map[var->y][var->x + 1] * var->angle;
-
-	printf("pos1.x = %d  pos1.y = %d  pos2.x = %d  pos2.y = %d\n", pos1.x, pos1.y, pos2.x, pos2.y);
-	printf("iso1.x = %d  iso1.y = %d  iso2.x = %d  iso2.y = %d\n", iso1.x, iso1.y, iso2.x, iso2.y);
+	iso1.y -= var->map[var->y][var->x] * 3;
+	iso2.y -= var->map[var->y][var->x + 1] * 3;
 
 	//draw line
 	draw_line(mlx, iso1.x, iso1.y, iso2.x, iso2.y, 0x00007700);
@@ -141,13 +98,8 @@ void	draw_d(t_var *var, t_data *mlx)
 	//init iso pos
 	iso1 = get_iso(*var, pos1);
 	iso2 = get_iso(*var, pos2);
-	iso1.y -= var->map[var->y][var->x] * 1.5;// * var->angle;
-	iso2.y -= var->map[var->y + 1][var->x] * 1.5;// * var->angle;
-	//iso1.x -= var->map[var->y][var->x] * var->angle;
-	//iso2.x -= var->map[var->y + 1][var->x] * var->angle;
-
-	printf("pos1.x = %d  pos1.y = %d  pos2.x = %d  pos2.y = %d\n", pos1.x, pos1.y, pos2.x, pos2.y);
-	printf("iso1.x = %d  iso1.y = %d  iso2.x = %d  iso2.y = %d\n", iso1.x, iso1.y, iso2.x, iso2.y);
+	iso1.y -= var->map[var->y][var->x] * 3;
+	iso2.y -= var->map[var->y + 1][var->x] * 3;
 
 	//draw line
 	draw_line(mlx, iso1.x, iso1.y, iso2.x, iso2.y, 0x00007700);
@@ -156,10 +108,13 @@ void	draw_d(t_var *var, t_data *mlx)
 void	ft_fdf(t_var *var, t_data *mlx)
 {
 	//init display
-	var->startx = WIDTH / 3 * 1.7;
-	var->starty = -250;
-	var->size = 50;
-	var->angle = 0.435;
+	int sizex, sizey;
+	sizex = mlx->width / (var->nb_c * 2);
+	sizey = mlx->height / (var->nb_l * 2);
+	var->size = sizex >= sizey ? sizey : sizex;
+	var->startx = 550;//mlx->width / 2 - var->nb_c * var->size;//mlx->width / 2;
+	var->starty = -50;//mlx->height / 2 - var->nb_l * var->size;//mlx->height / -2;
+	var->angle = 0.55;
 
 	var->y = 0;
 	while (var->y < var->nb_l)
@@ -194,8 +149,11 @@ int	main(int ac, char **av)
 	if (ac == 2 && parsing(&var, av[1]))
 	{
 		mlx.mlx = mlx_init();
-		mlx.win = mlx_new_window(mlx.mlx, WIDTH, HEIGHT, "Fdf");
-		mlx.img = mlx_new_image(mlx.mlx, WIDTH, HEIGHT);
+		mlx_get_screen_size(mlx.mlx, &mlx.width, &mlx.height);
+		mlx.width *= 0.5;
+		mlx.height *= 0.7;
+		mlx.win = mlx_new_window(mlx.mlx, mlx.width, mlx.height, "Fdf");
+		mlx.img = mlx_new_image(mlx.mlx, mlx.width, mlx.height);
 		mlx.addr = (int *)mlx_get_data_addr(mlx.img, &mlx.bits_per_pixel, &mlx.line_length,
 				&mlx.endian);
 		ft_fdf(&var, &mlx);

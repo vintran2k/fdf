@@ -22,8 +22,8 @@ typedef struct	s_data
 	int			bits_per_pixel;
 	int			line_length;
 	int			endian;
-	//int			width;
-	//int			height;
+	int			width;
+	int			height;
 }				t_data;
 
 typedef struct	s_var
