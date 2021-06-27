@@ -6,7 +6,7 @@
 /*   By: vintran <vintran@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/19 15:00:58 by vintran           #+#    #+#             */
-/*   Updated: 2021/06/21 17:44:27 by vintran          ###   ########.fr       */
+/*   Updated: 2021/06/27 05:58:23 by vintran          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	malloc_map(t_var *var)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	var->map = malloc(sizeof(int *) * var->nb_l);
@@ -30,87 +30,80 @@ int	malloc_map(t_var *var)
 	return (1);
 }
 
-int	fill_map_line(t_var *var, char **split, int map_line)
-{
-	int i;
-	int j;
-
-	i = 0;
-	while (split[i])
-	{
-		j = 0;
-		while (split[i][j])
-		{
-			if (split[i][j] < '0' || split[i][j] > '9')
-				return (0);
-			j++;
-		}
-		var->map[map_line][i] = ft_getnbr(split[i]);
-		i++;
-	}
-	return (1);
-}
-
 int	get_map(char *map, t_var *var)
 {
-	int fd;
-	int map_line;
-	char *line;
-	char **split;
-	int ret;
+	int		fd;
+	int		i;
+	int		j;
+	char	**split;
+	int		ret;
 
-	map_line = 0;
+	i = 0;
 	var->file = NULL;
 	ret = 1;
-	if ((fd = open(map, O_RDONLY)) == -1)
-		return (0);
+	fd = open(map, O_RDONLY);
 	while (ret)
 	{
-		ret = get_next_line(fd, &line, &var->file);
-		split = ft_split(line, ' ');
-		if (!fill_map_line(var, split, map_line))
+		ret = get_next_line(fd, &var->line, &var->file);
+		split = ft_split(var->line, ' ');
+		j = 0;
+		while (split[j])
 		{
-			free(line);
-			free(var->file);
-			return (0);
+			var->map[i][j] = ft_getnbr(split[j]);
+			j++;
 		}
-		free(line);
-		map_line++;
+		free(var->line);
+		i++;
 		ft_free_tab(split, var->nb_c);
 	}
 	close(fd);
 	return (1);
 }
 
-int		parsing(t_var *var, char *map)
+int	get_map_size(t_var *var, char *map)
 {
-	int fd;
-	char *line;
-	int i;
-	int ret;
+	int		ret;
+	int		fd;
 
-	if ((fd = open(map, O_RDONLY)) == -1)
+	fd = open(map, O_RDONLY);
+	if (fd == -1)
 		return (0);
 	ret = 1;
-	while(ret)
+	while (ret)
 	{
-		ret = get_next_line(fd, &line, &var->file);
-		if (var->nb_l == 0)
+		ret = get_next_line(fd, &var->line, &var->file);
+		if (!var->nb_c)
+			var->nb_c = ft_count_words(var->line, ' ');
+		else
 		{
-			i = 0;
-			while (line[i])
-			{
-				if (line[i] != ' ')
-					var->nb_c++;
-				i++;
-			}
+			if (ft_count_words(var->line, ' ') != var->nb_c)
+				return (0);
 		}
-		free(line);
+		free(var->line);
 		var->nb_l++;
 	}
-	close(fd);
-	if (!malloc_map(var) || !get_map(map, var))
+	if (close(fd) == -1)
 		return (0);
 	return (1);
 }
 
+int	parsing(t_var *var, int ac, char *map)
+{
+	int		i;
+	int		ret;
+
+	ret = 1;
+	if (ac != 2)
+	{
+		printf("Error\nToo few arguments\n");
+		return (0);
+	}
+	if (!get_map_size(var, map))
+	{
+		printf("Error\nInvalid file\n");
+		return (0);
+	}
+	if (!malloc_map(var) || !get_map(map, var))
+		return (0);
+	return (1);
+}

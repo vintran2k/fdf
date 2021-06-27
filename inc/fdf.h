@@ -13,7 +13,7 @@
 # include <math.h>
 # include "../minilibx-linux/mlx.h"
 
-typedef struct	s_data
+typedef struct s_data
 {
 	void		*mlx;
 	void		*win;
@@ -26,41 +26,47 @@ typedef struct	s_data
 	int			height;
 }				t_data;
 
-typedef struct	s_var
+typedef struct s_var
 {
-	int nb_l;
-	int nb_c;
-	char *file;
-	int **map;
-	int	x;
-	int	y;
-	int size;
-	int startx;
-	int starty;
-	double angle;
+	int		nb_l;
+	int		nb_c;
+	char	*file;
+	char	*line;
+	int		**map;
+	int		x;
+	int		y;
+	int		size;
+	int		startx;
+	int		starty;
+	double	angle;
 }				t_var;
 
-typedef struct	s_pos
+typedef struct s_pos
 {
-	float	x;
-	float	y;
+	int	x;
+	int	y;
 }				t_pos;
 
 void	put_pixel(t_data *data, int x, int y, int color);
-void	ft_putnbr(long nb);
+void	draw_line(t_data *mlx, int x1, int y1, int x2, int y2, int color);
+void	draw_r(t_var *var, t_data *mlx);
+void	draw_d(t_var *var, t_data *mlx);
+t_pos	get_iso(t_var var, t_pos pos);
+t_pos	get_cart(t_var var, t_pos iso);
+void	init_display(t_var *var, t_data mlx);
 int		ft_getnbr(char *str);
-void	ft_putstr(char *str);
-void	ft_putchar(char c);
+int		ft_isdigit(int c);
 void	ft_bzero(void *s, size_t n);
 char	*ft_sstrndup(char *src, int n);
 int		is_newline(char *s);
 int		ft_sstrlen(char *str);
+size_t	ft_count_words(const char *s, char c);
 void	ft_free_tab(char **tab, size_t size);
 int		deal_key(int key, void *params);
-int		deal_mouse(void);
+void	exit_fdf(void);
 char	**ft_split(const char *s, char c);
 int		get_next_line(int fd, char **line, char **file);
-int		parsing(t_var *var, char *map);
+int		parsing(t_var *var, int ac, char *map);
 
 // mlx.addr = (int *)mlx_get_data_addr(mlx.img, &mlx.bits_per_pixel, &mlx.line_length, &mlx.endian);
 // mlx.addr[y * mlx.line_length / 4 + x] = color;

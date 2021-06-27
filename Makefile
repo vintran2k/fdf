@@ -3,15 +3,16 @@ MLX_DIR			=	./minilibx-linux/
 INC_DIR			=	./inc/
 SRCS_DIR		=	./srcs/
 SRCS			=	fdf.c					\
-					fdf_utils.c				\
+					utils.c					\
 					parsing.c				\
+					draw.c					\
 					ft_split.c				\
 					get_next_line.c			\
 					get_next_line_utils.c
 SRCS_BASENAME	=	$(addprefix $(SRCS_DIR), $(SRCS))
 OBJS			=	$(SRCS_BASENAME:.c=.o)
 CC				=	gcc
-FLAGS			=	-Wall -Wextra -I $(INC_DIR) -I $(MLX_DIR) # -Werror
+FLAGS			=	-Wall -Wextra -g -I $(INC_DIR) -I $(MLX_DIR) # -Werror
 
 .c.o		:
 				$(CC) $(FLAGS) -c $< -o $(<:.c=.o)
