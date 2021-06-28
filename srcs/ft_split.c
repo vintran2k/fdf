@@ -6,7 +6,7 @@
 /*   By: vintran <vintran@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/19 14:54:18 by vintran           #+#    #+#             */
-/*   Updated: 2021/06/27 05:59:53 by vintran          ###   ########.fr       */
+/*   Updated: 2021/06/28 03:54:39 by vintran          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	ft_free_tab(char **tab, size_t size)
 	int i;
 
 	i = 0;
-	while (i <= size)
+	while (i <= (int)size)
 	{
 		free(tab[i]);
 		i++;

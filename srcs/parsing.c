@@ -6,7 +6,7 @@
 /*   By: vintran <vintran@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/19 15:00:58 by vintran           #+#    #+#             */
-/*   Updated: 2021/06/27 05:58:23 by vintran          ###   ########.fr       */
+/*   Updated: 2021/06/28 03:53:14 by vintran          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	malloc_map(t_var *var)
 	return (1);
 }
 
-int	get_map(char *map, t_var *var)
+void	get_map(char *map, t_var *var)
 {
 	int		fd;
 	int		i;
@@ -53,11 +53,11 @@ int	get_map(char *map, t_var *var)
 			j++;
 		}
 		free(var->line);
+		var->line = NULL;
 		i++;
 		ft_free_tab(split, var->nb_c);
 	}
 	close(fd);
-	return (1);
 }
 
 int	get_map_size(t_var *var, char *map)
@@ -73,13 +73,14 @@ int	get_map_size(t_var *var, char *map)
 	{
 		ret = get_next_line(fd, &var->line, &var->file);
 		if (!var->nb_c)
-			var->nb_c = ft_count_words(var->line, ' ');
+			var->nb_c = (int)ft_count_words(var->line, ' ');
 		else
 		{
-			if (ft_count_words(var->line, ' ') != var->nb_c)
+			if ((int)ft_count_words(var->line, ' ') != var->nb_c)
 				return (0);
 		}
 		free(var->line);
+		var->line = NULL;
 		var->nb_l++;
 	}
 	if (close(fd) == -1)
@@ -89,7 +90,6 @@ int	get_map_size(t_var *var, char *map)
 
 int	parsing(t_var *var, int ac, char *map)
 {
-	int		i;
 	int		ret;
 
 	ret = 1;
@@ -103,7 +103,11 @@ int	parsing(t_var *var, int ac, char *map)
 		printf("Error\nInvalid file\n");
 		return (0);
 	}
-	if (!malloc_map(var) || !get_map(map, var))
+	if (!malloc_map(var))
+	{
+		printf("Error\nMalloc failled\n");
 		return (0);
+	}
+	get_map(map, var);
 	return (1);
 }

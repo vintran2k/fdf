@@ -1,28 +1,22 @@
 #include "../inc/fdf.h"
 
-int	deal_key(int key, void *params)
+int	deal_key(int key, t_var *var)
 {
-	(void)params;
 	if (key == ESC_LNX)
-		exit_fdf();
+		exit_fdf(var);
 	return (0);
 }
 
-void	exit_fdf(void)
+void	ft_fdf(t_var *var)
 {
-	exit(0);
-}
-
-void	ft_fdf(t_var *var, t_data *mlx)
-{
-	init_display(var, *mlx);
+	init_display(var);
 	var->y = 0;
 	while (var->y < var->nb_l)
 	{
 		var->x = 0;
 		while (var->x < var->nb_c - 1)
 		{
-			draw_r(var, mlx);
+			draw_r(var);
 			var->x++;
 		}
 		var->y++;
@@ -33,7 +27,7 @@ void	ft_fdf(t_var *var, t_data *mlx)
 		var->y = 0;
 		while (var->y < var->nb_l - 1)
 		{
-			draw_d(var, mlx);
+			draw_d(var);
 			var->y++;
 		}
 		var->x++;
@@ -42,27 +36,27 @@ void	ft_fdf(t_var *var, t_data *mlx)
 
 int	main(int ac, char **av)
 {
-	t_data	mlx;
 	t_var	var;
 
 	ft_bzero(&var, sizeof(t_var));
 	if (parsing(&var, ac, av[1]))
 	{
-		mlx.mlx = mlx_init();
-		mlx_get_screen_size(mlx.mlx, &mlx.width, &mlx.height);
-		mlx.width *= 0.5;
-		mlx.height *= 0.7;
-		mlx.win = mlx_new_window(mlx.mlx, mlx.width, mlx.height, "Fdf");
-		mlx.img = mlx_new_image(mlx.mlx, mlx.width, mlx.height);
-		mlx.addr = (int *)mlx_get_data_addr(mlx.img, &mlx.bits_per_pixel,
-				&mlx.line_length, &mlx.endian);
-		printf("nb_l = %d  nb_c = %d\n", var.nb_l, var.nb_c);
-		ft_fdf(&var, &mlx);
-		mlx_put_image_to_window(mlx.mlx, mlx.win, mlx.img, 0, 0);
-		mlx_hook(mlx.win, 17, 0, exit_fdf, (void *)0);
-		mlx_key_hook(mlx.win, deal_key, (void *)0);
-		mlx_loop(mlx.mlx);
+		var.mlx.mlx = mlx_init();
+		mlx_get_screen_size(var.mlx.mlx, &var.mlx.width, &var.mlx.height);
+		var.mlx.width *= 0.5;
+		var.mlx.height *= 0.7;
+		var.mlx.win
+			= mlx_new_window(var.mlx.mlx, var.mlx.width, var.mlx.height, "Fdf");
+		var.mlx.img = mlx_new_image(var.mlx.mlx, var.mlx.width, var.mlx.height);
+		var.mlx.addr
+			= (int *)mlx_get_data_addr(var.mlx.img, &var.mlx.bits_per_pixel,
+				&var.mlx.line_length, &var.mlx.endian);
+		ft_fdf(&var);
+		mlx_put_image_to_window(var.mlx.mlx, var.mlx.win, var.mlx.img, 0, 0);
+		mlx_hook(var.mlx.win, 17, 0, exit_fdf, &var);
+		mlx_key_hook(var.mlx.win, deal_key, &var);
+		mlx_loop(var.mlx.mlx);
 	}
-	exit_fdf();
+	exit_fdf(&var);
 	return (0);
 }

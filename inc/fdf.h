@@ -28,6 +28,7 @@ typedef struct s_data
 
 typedef struct s_var
 {
+	t_data	mlx;
 	int		nb_l;
 	int		nb_c;
 	char	*file;
@@ -49,11 +50,11 @@ typedef struct s_pos
 
 void	put_pixel(t_data *data, int x, int y, int color);
 void	draw_line(t_data *mlx, int x1, int y1, int x2, int y2, int color);
-void	draw_r(t_var *var, t_data *mlx);
-void	draw_d(t_var *var, t_data *mlx);
-t_pos	get_iso(t_var var, t_pos pos);
-t_pos	get_cart(t_var var, t_pos iso);
-void	init_display(t_var *var, t_data mlx);
+void	draw_r(t_var *var);
+void	draw_d(t_var *var);
+t_pos	get_iso(t_pos pos);
+t_pos	get_cart(t_pos iso);
+void	init_display(t_var *var);
 int		ft_getnbr(char *str);
 int		ft_isdigit(int c);
 void	ft_bzero(void *s, size_t n);
@@ -62,8 +63,8 @@ int		is_newline(char *s);
 int		ft_sstrlen(char *str);
 size_t	ft_count_words(const char *s, char c);
 void	ft_free_tab(char **tab, size_t size);
-int		deal_key(int key, void *params);
-void	exit_fdf(void);
+int		deal_key(int key, t_var *var);
+int		exit_fdf(t_var *var);
 char	**ft_split(const char *s, char c);
 int		get_next_line(int fd, char **line, char **file);
 int		parsing(t_var *var, int ac, char *map);

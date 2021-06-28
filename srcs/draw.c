@@ -6,7 +6,7 @@
 /*   By: vintran <vintran@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/27 02:46:34 by vintran           #+#    #+#             */
-/*   Updated: 2021/06/27 02:56:42 by vintran          ###   ########.fr       */
+/*   Updated: 2021/06/28 03:54:12 by vintran          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void	draw_line(t_data *mlx, int x1, int y1, int x2, int y2, int color)
 	}
 }
 
-t_pos	get_iso(t_var var, t_pos pos)
+t_pos	get_iso(t_pos pos)
 {
 	t_pos iso;
 
@@ -57,7 +57,7 @@ t_pos	get_iso(t_var var, t_pos pos)
 	return (iso);
 }
 
-t_pos	get_cart(t_var var, t_pos iso)
+t_pos	get_cart(t_pos iso)
 {
 	t_pos cart;
 	
@@ -66,7 +66,7 @@ t_pos	get_cart(t_var var, t_pos iso)
 	return (cart);
 }
 
-void	draw_r(t_var *var, t_data *mlx)
+void	draw_r(t_var *var)
 {
 	t_pos pos1;
 	t_pos pos2;
@@ -80,18 +80,18 @@ void	draw_r(t_var *var, t_data *mlx)
 	pos2.y = pos1.y;
 
 	//init iso pos
-	iso1 = get_iso(*var, pos1);
-	iso2 = get_iso(*var, pos2);
+	iso1 = get_iso(pos1);
+	iso2 = get_iso(pos2);
 	iso1.y *= var->angle;//
 	iso2.y *= var->angle;//
 	iso1.y -= var->map[var->y][var->x] * 3;
 	iso2.y -= var->map[var->y][var->x + 1] * 3;
 
 	//draw line
-	draw_line(mlx, iso1.x, iso1.y, iso2.x, iso2.y, 0x00007700);
+	draw_line(&var->mlx, iso1.x, iso1.y, iso2.x, iso2.y, 0x00007700);
 }
 
-void	draw_d(t_var *var, t_data *mlx)
+void	draw_d(t_var *var)
 {
 	t_pos pos1;
 	t_pos pos2;
@@ -105,13 +105,13 @@ void	draw_d(t_var *var, t_data *mlx)
 	pos2.y = var->starty + (var->y + 1) * var->size;
 
 	//init iso pos
-	iso1 = get_iso(*var, pos1);
-	iso2 = get_iso(*var, pos2);
+	iso1 = get_iso(pos1);
+	iso2 = get_iso(pos2);
 	iso1.y *= var->angle;//
 	iso2.y *= var->angle;//
 	iso1.y -= var->map[var->y][var->x] * 3;
 	iso2.y -= var->map[var->y + 1][var->x] * 3;
 
 	//draw line
-	draw_line(mlx, iso1.x, iso1.y, iso2.x, iso2.y, 0x00007700);
+	draw_line(&var->mlx, iso1.x, iso1.y, iso2.x, iso2.y, 0x00007700);
 }

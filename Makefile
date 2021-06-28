@@ -8,11 +8,12 @@ SRCS			=	fdf.c					\
 					draw.c					\
 					ft_split.c				\
 					get_next_line.c			\
-					get_next_line_utils.c
+					get_next_line_utils.c	\
+					exit.c
 SRCS_BASENAME	=	$(addprefix $(SRCS_DIR), $(SRCS))
 OBJS			=	$(SRCS_BASENAME:.c=.o)
-CC				=	gcc
-FLAGS			=	-Wall -Wextra -g -I $(INC_DIR) -I $(MLX_DIR) # -Werror
+CC				=	clang
+FLAGS			=	-Wall -Wextra -Werror -I $(INC_DIR) -I $(MLX_DIR)
 
 .c.o		:
 				$(CC) $(FLAGS) -c $< -o $(<:.c=.o)

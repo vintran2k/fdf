@@ -38,19 +38,19 @@ int	ft_getnbr(char *str)
 	return (res);
 }
 
-void	init_display(t_var *var, t_data mlx)
+void	init_display(t_var *var)
 {
 	int sizex, sizey;
 
 	t_pos cart, iso;
 
-	iso.x = mlx.width / 2;
-	iso.y = mlx.height / 2;
-	cart = get_cart(*var, iso);
+	iso.x = var->mlx.width / 2;
+	iso.y = var->mlx.height / 2;
+	cart = get_cart(iso);
 
 	var->angle = 1;
-	sizex = mlx.width / (var->nb_c * 2);
-	sizey = mlx.height / (var->nb_l * 2);
+	sizex = var->mlx.width / (var->nb_c * 2);
+	sizey = var->mlx.height / (var->nb_l * 2);
 	var->size = sizex >= sizey ? sizey : sizex;
 	var->startx = cart.x - var->nb_c / 2 * var->size;
 	var->starty = cart.y - var->nb_l / 2 * var->size;
