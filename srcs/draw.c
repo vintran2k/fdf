@@ -6,7 +6,7 @@
 /*   By: vintran <vintran@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/27 02:46:34 by vintran           #+#    #+#             */
-/*   Updated: 2021/06/28 03:54:12 by vintran          ###   ########.fr       */
+/*   Updated: 2021/07/01 03:14:15 by vintran          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	put_pixel(t_data *mlx, int x, int y, int color)
 {
-	if ((x >= 0 && x <= mlx->width) && (y >= 0 && y <= mlx->height))
+	if ((x >= 0 && x < mlx->width) && (y >= 0 && y < mlx->height))
 		mlx->addr[y * mlx->line_length / 4 + x] = color;
 }
 
