@@ -46,7 +46,7 @@ void	init_display(t_var *var)
 
 	iso.x = var->mlx.width / 2;
 	iso.y = var->mlx.height / 2;
-	var->angle = 0.85;
+	var->angle = 0.1;
 	cart = get_cart(iso, var->angle);
 
 	sizex = var->mlx.width / (var->nb_c * 2);
