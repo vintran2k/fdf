@@ -48,21 +48,21 @@ void	draw_line(t_data *mlx, int x1, int y1, int x2, int y2, int color)
 	}
 }
 
-t_pos	get_iso(t_pos pos)
+t_pos	get_iso(t_pos pos, double angle)
 {
 	t_pos iso;
 
-	iso.x = (pos.x - pos.y);// * cos(var.angle);
-	iso.y = (pos.x + pos.y) / 2;// * var.angle; * sin(var.angle);
+	iso.x = (pos.x - pos.y);
+	iso.y = (pos.x + pos.y) / 2 * angle;
 	return (iso);
 }
 
-t_pos	get_cart(t_pos iso)
+t_pos	get_cart(t_pos iso, double angle)
 {
 	t_pos cart;
 	
-	cart.x = (2 * iso.y + iso.x) / 2;
-	cart.y = (2 * iso.y - iso.x) / 2;
+	cart.x = (2 * (iso.y / angle) + iso.x) / 2;
+	cart.y = (2 * (iso.y / angle) - iso.x) / 2;
 	return (cart);
 }
 
@@ -80,10 +80,9 @@ void	draw_r(t_var *var)
 	pos2.y = pos1.y;
 
 	//init iso pos
-	iso1 = get_iso(pos1);
-	iso2 = get_iso(pos2);
-	iso1.y *= var->angle;//
-	iso2.y *= var->angle;//
+	iso1 = get_iso(pos1, var->angle);
+	iso2 = get_iso(pos2, var->angle);
+
 	iso1.y -= var->map[var->y][var->x] * 3;
 	iso2.y -= var->map[var->y][var->x + 1] * 3;
 
@@ -105,10 +104,9 @@ void	draw_d(t_var *var)
 	pos2.y = var->starty + (var->y + 1) * var->size;
 
 	//init iso pos
-	iso1 = get_iso(pos1);
-	iso2 = get_iso(pos2);
-	iso1.y *= var->angle;//
-	iso2.y *= var->angle;//
+	iso1 = get_iso(pos1, var->angle);
+	iso2 = get_iso(pos2, var->angle);
+
 	iso1.y -= var->map[var->y][var->x] * 3;
 	iso2.y -= var->map[var->y + 1][var->x] * 3;
 
