@@ -1,9 +1,6 @@
 #ifndef FDF_H
 # define FDF_H
-# define ESC_MAC 53
 # define ESC_LNX 65307
-# define WIDTH 1200
-# define HEIGHT 670
 # define BUFFER_SIZE 4096
 
 # include <unistd.h>
@@ -40,6 +37,8 @@ typedef struct s_var
 	int		startx;
 	int		starty;
 	double	angle;
+	int		up;
+	int		down;
 }				t_var;
 
 typedef struct s_pos
@@ -47,6 +46,7 @@ typedef struct s_pos
 	int	x;
 	int	y;
 }				t_pos;
+
 
 void	put_pixel(t_data *data, int x, int y, int color);
 void	draw_line(t_data *mlx, int x1, int y1, int x2, int y2, int color);

@@ -86,8 +86,8 @@ char	*get_line(char **file)
 
 int	get_next_line(int fd, char **line, char **file)
 {
-	int			ret;
-	char		buf[BUFFER_SIZE + 1];
+	int		ret;
+	char	buf[BUFFER_SIZE + 1];
 
 	if (fd < 0 || !line || BUFFER_SIZE <= 0)
 		return (-1);

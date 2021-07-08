@@ -1,15 +1,8 @@
-#include "../inc/fdf.h"
+#include "fdf_bonus.h"
 
-int	deal_key(int key, t_var *var)
+int	ft_fdf_bonus(t_var *var)
 {
-	if (key == ESC_LNX)
-		exit_fdf(var);
-	return (0);
-}
-
-void	ft_fdf(t_var *var)
-{
-	init_display(var);
+	init_display_bonus(var);
 	var->y = 0;
 	while (var->y < var->nb_l)
 	{
@@ -32,6 +25,9 @@ void	ft_fdf(t_var *var)
 		}
 		var->x++;
 	}
+	mlx_put_image_to_window(var->mlx.mlx, var->mlx.win, var->mlx.img, 0, 0);
+	clean_img(var);
+	return (0);
 }
 
 int	main(int ac, char **av)
@@ -52,10 +48,10 @@ int	main(int ac, char **av)
 		var.mlx.addr
 			= (int *)mlx_get_data_addr(var.mlx.img, &var.mlx.bits_per_pixel,
 				&var.mlx.line_length, &var.mlx.endian);
-		ft_fdf(&var);
-		mlx_put_image_to_window(var.mlx.mlx, var.mlx.win, var.mlx.img, 0, 0);
 		mlx_hook(var.mlx.win, 17, 0, exit_fdf, &var);
-		mlx_key_hook(var.mlx.win, deal_key, &var);
+		mlx_hook(var.mlx.win, 02, 1L << 0, key_press_bonus, &var);
+		mlx_hook(var.mlx.win, 03, 1L << 1, key_release_bonus, &var);
+		mlx_loop_hook(var.mlx.mlx, ft_fdf_bonus, &var);
 		mlx_loop(var.mlx.mlx);
 	}
 	exit_fdf(&var);

@@ -45,17 +45,20 @@ void	get_map(char *map, t_var *var)
 	while (ret)
 	{
 		ret = get_next_line(fd, &var->line, &var->file);
-		split = ft_split(var->line, ' ');
-		j = 0;
-		while (split[j])
+		if (ret == 1 && var->line[0])
 		{
-			var->map[i][j] = ft_getnbr(split[j]);
-			j++;
+			split = ft_split(var->line, ' ');
+			j = 0;
+			while (split[j])
+			{
+				var->map[i][j] = ft_getnbr(split[j]);
+				j++;
+			}
+			i++;
+			ft_free_tab(split, var->nb_c);
 		}
 		free(var->line);
 		var->line = NULL;
-		i++;
-		ft_free_tab(split, var->nb_c);
 	}
 	close(fd);
 }
@@ -74,14 +77,15 @@ int	get_map_size(t_var *var, char *map)
 		ret = get_next_line(fd, &var->line, &var->file);
 		if (!var->nb_c)
 			var->nb_c = (int)ft_count_words(var->line, ' ');
-		else
+		else if (ret == 1 && var->line[0])
 		{
 			if ((int)ft_count_words(var->line, ' ') != var->nb_c)
 				return (0);
 		}
+		if (ret == 1 && var->line[0])
+			var->nb_l++;
 		free(var->line);
 		var->line = NULL;
-		var->nb_l++;
 	}
 	if (close(fd) == -1)
 		return (0);
