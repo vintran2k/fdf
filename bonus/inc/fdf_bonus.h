@@ -4,7 +4,7 @@
 # define ARROW_UP 65362
 # define ARROW_DOWN 65364
 
-# include "../../inc/fdf.h"
+# include "../../inc/fdf.h" 
 
 int		key_press_bonus(int key, t_var *var);
 int		key_release_bonus(int key, t_var *var);

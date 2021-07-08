@@ -7,6 +7,25 @@ int	deal_key(int key, t_var *var)
 	return (0);
 }
 
+void	init_display(t_var *var)
+{
+	int		sizex;
+	int		sizey;
+	t_pos	cart;
+	t_pos	iso;
+
+	iso.x = var->mlx.width / 2;
+	iso.y = var->mlx.height / 2;
+	cart = get_cart(iso, var->angle);
+	sizex = var->mlx.width / (var->nb_c * 2);
+	sizey = var->mlx.height / (var->nb_l * 2);
+	var->size = sizex;
+	if (sizex >= sizey)
+		var->size = sizey;
+	var->startx = cart.x - var->nb_c / 2 * var->size;
+	var->starty = cart.y - var->nb_l / 2 * var->size;
+}
+
 void	ft_fdf(t_var *var)
 {
 	init_display(var);

@@ -32,71 +32,60 @@ int	malloc_map(t_var *var)
 
 void	get_map(char *map, t_var *var)
 {
-	int		fd;
 	int		i;
 	int		j;
 	char	**split;
-	int		ret;
 
 	i = 0;
 	var->file = NULL;
-	ret = 1;
-	fd = open(map, O_RDONLY);
-	while (ret)
+	var->ret = 1;
+	var->fd = open(map, O_RDONLY);
+	while (var->ret)
 	{
-		ret = get_next_line(fd, &var->line, &var->file);
-		if (ret == 1 && var->line[0])
+		var->ret = get_next_line(var->fd, &var->line, &var->file);
+		if (var->ret == 1 && var->line[0])
 		{
 			split = ft_split(var->line, ' ');
-			j = 0;
-			while (split[j])
-			{
+			j = -1;
+			while (split[++j])
 				var->map[i][j] = ft_getnbr(split[j]);
-				j++;
-			}
 			i++;
 			ft_free_tab(split, var->nb_c);
 		}
 		free(var->line);
 		var->line = NULL;
 	}
-	close(fd);
+	close(var->fd);
 }
 
 int	get_map_size(t_var *var, char *map)
 {
-	int		ret;
-	int		fd;
-
-	fd = open(map, O_RDONLY);
-	if (fd == -1)
+	var->fd = open(map, O_RDONLY);
+	if (var->fd == -1)
 		return (0);
-	ret = 1;
-	while (ret)
+	var->ret = 1;
+	while (var->ret)
 	{
-		ret = get_next_line(fd, &var->line, &var->file);
+		var->ret = get_next_line(var->fd, &var->line, &var->file);
 		if (!var->nb_c)
 			var->nb_c = (int)ft_count_words(var->line, ' ');
-		else if (ret == 1 && var->line[0])
+		else if (var->ret == 1 && var->line[0])
 		{
 			if ((int)ft_count_words(var->line, ' ') != var->nb_c)
 				return (0);
 		}
-		if (ret == 1 && var->line[0])
+		if (var->ret == 1 && var->line[0])
 			var->nb_l++;
 		free(var->line);
 		var->line = NULL;
 	}
-	if (close(fd) == -1)
+	if (close(var->fd) == -1)
 		return (0);
 	return (1);
 }
 
 int	parsing(t_var *var, int ac, char *map)
 {
-	int		ret;
-
-	ret = 1;
 	if (ac != 2)
 	{
 		printf("Error\nToo few arguments\n");

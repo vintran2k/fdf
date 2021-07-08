@@ -14,7 +14,7 @@
 
 void	ft_free_tab(char **tab, size_t size)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (i <= (int)size)
@@ -52,6 +52,7 @@ char	*ft_strndup(char *src, int n)
 {
 	int		i;
 	char	*dest;
+
 	i = 0;
 	while (src[i] && i < n)
 		i++;
@@ -70,9 +71,9 @@ char	*ft_strndup(char *src, int n)
 
 void	ft_fill_tab(char **tab, const char *s, char c, size_t nb_words)
 {
-	size_t i;
-	size_t j;
-	size_t word_len;
+	size_t	i;
+	size_t	j;
+	size_t	word_len;
 
 	i = 0;
 	j = 0;
@@ -103,7 +104,8 @@ char	**ft_split(const char *s, char c)
 	if (!s)
 		return (NULL);
 	nb_words = ft_count_words(s, c);
-	if (!(tab = malloc(sizeof(char *) * (nb_words + 1))))
+	tab = malloc(sizeof(char *) * (nb_words + 1));
+	if (!tab)
 		return (NULL);
 	ft_fill_tab(tab, s, c, nb_words);
 	return (tab);

@@ -38,21 +38,20 @@ int	ft_getnbr(char *str)
 	return (res);
 }
 
-void	init_display(t_var *var)
+t_pos	get_iso(t_pos pos, double angle)
 {
-	int		sizex;
-	int		sizey;
-	t_pos	cart;
 	t_pos	iso;
 
-	iso.x = var->mlx.width / 2;
-	iso.y = var->mlx.height / 2;
-	cart = get_cart(iso, var->angle);
-	sizex = var->mlx.width / (var->nb_c * 2);
-	sizey = var->mlx.height / (var->nb_l * 2);
-	var->size = sizex;
-	if (sizex >= sizey)
-		var->size = sizey;
-	var->startx = cart.x - var->nb_c / 2 * var->size;
-	var->starty = cart.y - var->nb_l / 2 * var->size;
+	iso.x = (pos.x - pos.y) * angle;
+	iso.y = (pos.x + pos.y) / 2 * angle;
+	return (iso);
+}
+
+t_pos	get_cart(t_pos iso, double angle)
+{
+	t_pos	cart;
+
+	cart.x = (2 * (iso.y / angle) + (iso.x / angle)) / 2;
+	cart.y = (2 * (iso.y / angle) - (iso.x / angle)) / 2;
+	return (cart);
 }

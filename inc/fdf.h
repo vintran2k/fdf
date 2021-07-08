@@ -26,6 +26,8 @@ typedef struct s_data
 typedef struct s_var
 {
 	t_data	mlx;
+	int		fd;
+	int		ret;
 	int		nb_l;
 	int		nb_c;
 	char	*file;
