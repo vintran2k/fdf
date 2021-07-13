@@ -6,11 +6,11 @@
 /*   By: vintran <vintran@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/27 18:29:03 by vintran           #+#    #+#             */
-/*   Updated: 2021/06/28 03:51:38 by vintran          ###   ########.fr       */
+/*   Updated: 2021/07/13 15:00:12 by vintran          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <../inc/fdf.h>
+#include "../inc/fdf.h"
 
 void	mlx_destroy(t_var *var)
 {

@@ -8,6 +8,7 @@ SRCS			=	fdf.c					\
 					utils.c					\
 					parsing.c				\
 					draw.c					\
+					line.c					\
 					ft_split.c				\
 					get_next_line.c			\
 					get_next_line_utils.c	\

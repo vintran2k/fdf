@@ -21,6 +21,9 @@ typedef struct s_data
 	int			endian;
 	int			width;
 	int			height;
+	float		dx;
+	float		dy;
+	float		error;
 }				t_data;
 
 typedef struct s_var
@@ -39,8 +42,11 @@ typedef struct s_var
 	int		startx;
 	int		starty;
 	double	angle;
+	double	alt;
 	int		up;
 	int		down;
+	int		left;
+	int		right;
 }				t_var;
 
 typedef struct s_pos
@@ -52,6 +58,7 @@ typedef struct s_pos
 
 void	put_pixel(t_data *data, int x, int y, int color);
 void	draw_line(t_data *mlx, int x1, int y1, int x2, int y2, int color);
+void	draw_line_s(t_data *mlx, t_pos pos1, t_pos pos2, int color);
 void	draw_r(t_var *var);
 void	draw_d(t_var *var);
 t_pos	get_iso(t_pos pos, double angle);

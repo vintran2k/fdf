@@ -8,6 +8,7 @@ SRCS			=	fdf_bonus.c		\
 
 SRCS_BASENAME	=	$(addprefix $(SRCS_DIR), $(SRCS))					\
 					$(addprefix $(FIRST_SRCS), draw.c)					\
+					$(addprefix $(FIRST_SRCS), line.c)					\
 					$(addprefix $(FIRST_SRCS), parsing.c)				\
 					$(addprefix $(FIRST_SRCS), ft_split.c)				\
 					$(addprefix $(FIRST_SRCS), get_next_line.c)			\

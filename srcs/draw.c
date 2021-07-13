@@ -6,7 +6,7 @@
 /*   By: vintran <vintran@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/27 02:46:34 by vintran           #+#    #+#             */
-/*   Updated: 2021/07/01 03:14:15 by vintran          ###   ########.fr       */
+/*   Updated: 2021/07/13 18:12:11 by vintran          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,9 +61,10 @@ void	draw_r(t_var *var)
 	pos2.y = pos1.y;
 	iso1 = get_iso(pos1, var->angle);
 	iso2 = get_iso(pos2, var->angle);
-	iso1.y -= var->map[var->y][var->x] * 3 * var->angle;
-	iso2.y -= var->map[var->y][var->x + 1] * 3 * var->angle;
-	draw_line(&var->mlx, iso1.x, iso1.y, iso2.x, iso2.y, 0x00007700);
+	iso1.y -= (var->map[var->y][var->x] * var->alt) * 3 * var->angle;
+	iso2.y -= (var->map[var->y][var->x + 1] * var->alt) * 3 * var->angle;
+	//draw_line(&var->mlx, iso1.x, iso1.y, iso2.x, iso2.y, 0x00007700);
+	draw_line_s(&var->mlx, iso1, iso2, 0x00007700);
 }
 
 void	draw_d(t_var *var)
@@ -79,7 +80,8 @@ void	draw_d(t_var *var)
 	pos2.y = var->starty + (var->y + 1) * var->size;
 	iso1 = get_iso(pos1, var->angle);
 	iso2 = get_iso(pos2, var->angle);
-	iso1.y -= var->map[var->y][var->x] * 3 * var->angle;
-	iso2.y -= var->map[var->y + 1][var->x] * 3 * var->angle;
-	draw_line(&var->mlx, iso1.x, iso1.y, iso2.x, iso2.y, 0x00007700);
+	iso1.y -= (var->map[var->y][var->x] * var->alt) * 3 * var->angle;
+	iso2.y -= (var->map[var->y + 1][var->x] * var->alt) * 3 * var->angle;
+	//draw_line(&var->mlx, iso1.x, iso1.y, iso2.x, iso2.y, 0x00007700);
+	draw_line_s(&var->mlx, iso1, iso2, 0x00007700);
 }

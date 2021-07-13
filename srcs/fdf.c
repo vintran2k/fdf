@@ -59,6 +59,7 @@ int	main(int ac, char **av)
 
 	ft_bzero(&var, sizeof(t_var));
 	var.angle = 1;
+	var.alt = 1;
 	if (parsing(&var, ac, av[1]))
 	{
 		var.mlx.mlx = mlx_init();
@@ -71,7 +72,17 @@ int	main(int ac, char **av)
 		var.mlx.addr
 			= (int *)mlx_get_data_addr(var.mlx.img, &var.mlx.bits_per_pixel,
 				&var.mlx.line_length, &var.mlx.endian);
-		ft_fdf(&var);
+		//ft_fdf(&var);
+		t_pos pos1;
+		t_pos pos2;
+
+		pos1.x = 800;
+		pos1.y = 800;
+		pos2.x = 50;
+		pos2.y = 100;
+		draw_line_s(&var.mlx, pos1, pos2, 0x00007700);
+		put_pixel(&var.mlx, pos1.x, pos1.y, 0xFF0000);
+		put_pixel(&var.mlx, pos2.x, pos2.y, 0x0000FF);
 		mlx_put_image_to_window(var.mlx.mlx, var.mlx.win, var.mlx.img, 0, 0);
 		mlx_hook(var.mlx.win, 17, 0, exit_fdf, &var);
 		mlx_key_hook(var.mlx.win, deal_key, &var);

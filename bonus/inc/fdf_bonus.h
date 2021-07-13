@@ -3,6 +3,8 @@
 
 # define ARROW_UP 65362
 # define ARROW_DOWN 65364
+# define ARROW_LEFT 65361
+# define ARROW_RIGHT 65363
 
 # include "../../inc/fdf.h" 
 
