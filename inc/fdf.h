@@ -55,10 +55,8 @@ typedef struct s_pos
 	int	y;
 }				t_pos;
 
-
 void	put_pixel(t_data *data, int x, int y, int color);
-void	draw_line(t_data *mlx, int x1, int y1, int x2, int y2, int color);
-void	draw_line_s(t_data *mlx, t_pos pos1, t_pos pos2, int color);
+void	draw_line(t_data *mlx, t_pos pos1, t_pos pos2, int color);
 void	draw_r(t_var *var);
 void	draw_d(t_var *var);
 t_pos	get_iso(t_pos pos, double angle);
@@ -77,8 +75,5 @@ int		exit_fdf(t_var *var);
 char	**ft_split(const char *s, char c);
 int		get_next_line(int fd, char **line, char **file);
 int		parsing(t_var *var, int ac, char *map);
-
-// mlx.addr = (int *)mlx_get_data_addr(mlx.img, &mlx.bits_per_pixel, &mlx.line_length, &mlx.endian);
-// mlx.addr[y * mlx.line_length / 4 + x] = color;
 
 #endif
