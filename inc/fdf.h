@@ -73,7 +73,7 @@ void	ft_free_tab(char **tab, size_t size);
 int		deal_key(int key, t_var *var);
 int		exit_fdf(t_var *var);
 char	**ft_split(const char *s, char c);
-int		get_next_line(int fd, char **line, char **file);
+int		get_next_line(int fd, char **line, char **file, int ret);
 int		parsing(t_var *var, int ac, char *map);
 
 #endif

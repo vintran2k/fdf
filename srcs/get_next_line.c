@@ -6,7 +6,7 @@
 /*   By: vintran <vintran@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/19 15:13:13 by vintran           #+#    #+#             */
-/*   Updated: 2021/07/13 14:59:54 by vintran          ###   ########.fr       */
+/*   Updated: 2021/07/14 14:06:39 by vintran          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,14 +84,12 @@ char	*get_line(char **file)
 	return (res);
 }
 
-int	get_next_line(int fd, char **line, char **file)
+int	get_next_line(int fd, char **line, char **file, int ret)
 {
-	int		ret;
 	char	buf[BUFFER_SIZE + 1];
 
 	if (fd < 0 || !line || BUFFER_SIZE <= 0)
 		return (-1);
-	ret = 1;
 	while (ret && !is_newline(*file))
 	{
 		ret = read(fd, buf, BUFFER_SIZE);
@@ -108,6 +106,7 @@ int	get_next_line(int fd, char **line, char **file)
 	if (ret == 0)
 	{
 		free(*file);
+		*file = NULL;
 		return (ret);
 	}
 	return (1);

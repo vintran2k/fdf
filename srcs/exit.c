@@ -6,7 +6,7 @@
 /*   By: vintran <vintran@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/27 18:29:03 by vintran           #+#    #+#             */
-/*   Updated: 2021/07/13 15:00:12 by vintran          ###   ########.fr       */
+/*   Updated: 2021/07/14 13:46:53 by vintran          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,8 @@ int	exit_fdf(t_var *var)
 	}
 	if (var->line)
 		free(var->line);
+	if (var->file)
+		free(var->file);
 	mlx_destroy(var);
 	exit(0);
 	return (0);
